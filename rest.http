@@ -1,0 +1,8 @@
+@rootAPI=http://localhost:8001
+
+@categoryAPI={{rootAPI}}/customer/api/v1/category
+###
+GET {{rootAPI}}
+
+###
+GET {{categoryAPI}}
