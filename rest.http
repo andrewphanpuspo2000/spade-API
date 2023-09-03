@@ -6,3 +6,10 @@ GET {{rootAPI}}
 
 ###
 GET {{categoryAPI}}
+
+###
+GET {{categoryAPI}}/RPG/64f2c670f6ae306ea3c56579
+
+
+###
+GET {{categoryAPI}}/getItem/64f3cdbbd04914d7fb644c02
