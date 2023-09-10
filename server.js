@@ -10,8 +10,11 @@ const PORT = 8001;
 app.use(express.json());
 app.use(cors());
 app.use(morgan());
+//import router end point
 import categoryRouter from "./src/router/categoryRouter.js";
-app.use("/customer/api/v1/category", categoryRouter);
+app.use("/store/api/v1/category", categoryRouter);
+import customerRouter from "./src/router/customerRouter.js";
+app.use("/store/api/v1/customer", customerRouter);
 app.use((error, req, res, next) => {
   const code = error.statusCode || 500;
   res.status(code).json({
