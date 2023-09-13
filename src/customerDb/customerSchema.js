@@ -25,8 +25,8 @@ const customerSchema = mongoose.Schema(
       required: true,
     },
     isVerified: {
-      type: String,
-      default: "",
+      type: Boolean,
+      default: false,
     },
     refreshJWT: {
       type: String,

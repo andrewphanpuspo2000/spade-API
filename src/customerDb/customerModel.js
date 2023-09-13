@@ -6,3 +6,7 @@ export const addUser = (user) => {
 export const findByFilter = (data) => {
   return customerSchema.findOne(data);
 };
+
+export const updateByFilter = (filter, data) => {
+  return customerSchema.findOneAndUpdate(filter, data);
+};
