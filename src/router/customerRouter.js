@@ -7,14 +7,18 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { accountVerificationEmail } from "../helper/nodemailer.js";
 import isOnline from "is-online";
+import { comparePass, encryptPass } from "../encrypt/bycrpt.js";
+import { createAccessJWT, createRefreshJWT } from "../JWT/jwtAction.js";
+import { auth } from "../authMiddleware/auth.js";
 const router = express.Router();
 
 router.post("/addUser", async (req, res, next) => {
   try {
-    const { email } = req.body;
+    const { email, password } = req.body;
     const checkEmail = await findByFilter({ email });
     if (!checkEmail) {
       const verifCode = uuidv4();
+      req.body.password = encryptPass(password);
       req.body.verificationCode = verifCode;
       const online = await isOnline();
       if (online) {
@@ -70,13 +74,47 @@ router.post("/verifyUser", async (req, res, next) => {
         message: "Account can not be verified twice",
       });
     }
-    // return res.json({
-    //   status: "error",
-    //   message: "Can not verified the account",
-    // });
   } catch (error) {
     next(error);
   }
 });
 
+router.post("/login", async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const userCheck = await findByFilter({ email });
+    if (userCheck?._id) {
+      const checkPassword = comparePass(password, userCheck.password);
+      if (checkPassword) {
+        const sessionJWT = await createAccessJWT(email);
+        const refreshJWT = await createRefreshJWT(email);
+        return res.json({
+          status: "success",
+          message: "success Login",
+          sessionJWT,
+          refreshJWT,
+        });
+      } else {
+        res.json({
+          status: "error",
+          message: "Password is incorrect,please try again",
+        });
+      }
+    } else {
+      return res.json({
+        status: "error",
+        message: "Email is not found",
+      });
+    }
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.get("/getUserInfo", auth, (req, res, next) => {
+  return res.json({
+    status: "success",
+    user: req.body.userInfo,
+  });
+});
 export default router;
