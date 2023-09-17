@@ -9,7 +9,7 @@ import { accountVerificationEmail } from "../helper/nodemailer.js";
 import isOnline from "is-online";
 import { comparePass, encryptPass } from "../encrypt/bycrpt.js";
 import { createAccessJWT, createRefreshJWT } from "../JWT/jwtAction.js";
-import { auth } from "../authMiddleware/auth.js";
+import { auth, newAccessJWT } from "../authMiddleware/auth.js";
 const router = express.Router();
 
 router.post("/addUser", async (req, res, next) => {
@@ -112,9 +112,16 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.get("/getUserInfo", auth, (req, res, next) => {
-  return res.json({
-    status: "success",
-    user: req.body.userInfo,
-  });
+  try {
+    return res.json({
+      status: "success",
+      user: req.userInfo,
+    });
+  } catch (err) {
+    next(err);
+  }
 });
+
+router.get("/getAccessJWT", newAccessJWT);
+
 export default router;

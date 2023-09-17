@@ -15,6 +15,9 @@ import categoryRouter from "./src/router/categoryRouter.js";
 app.use("/store/api/v1/category", categoryRouter);
 import customerRouter from "./src/router/customerRouter.js";
 app.use("/store/api/v1/customer", customerRouter);
+import methods from "./src/router/paymentRouter.js";
+app.use("/store/api/v1/payments", methods);
+
 app.use((error, req, res, next) => {
   const code = error.statusCode || 500;
   res.status(code).json({
