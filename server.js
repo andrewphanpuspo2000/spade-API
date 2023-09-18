@@ -17,6 +17,8 @@ import customerRouter from "./src/router/customerRouter.js";
 app.use("/store/api/v1/customer", customerRouter);
 import methods from "./src/router/paymentRouter.js";
 app.use("/store/api/v1/payments", methods);
+import order from "./src/router/orderRouter.js";
+app.use("/store/api/v1/order", order);
 
 app.use((error, req, res, next) => {
   const code = error.statusCode || 500;
