@@ -58,6 +58,10 @@ const orderSchema = mongoose.Schema({
     type: mongoose.Types.ObjectId,
     required: true,
   },
+  totalPrice: {
+    type: Number,
+    required: true,
+  },
 });
 
 export default mongoose.model("order", orderSchema);
