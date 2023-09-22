@@ -3,6 +3,7 @@ import {
   addUser,
   findByFilter,
   updateByFilter,
+  updateById,
 } from "../customerDb/customerModel.js";
 import { v4 as uuidv4 } from "uuid";
 import { accountVerificationEmail } from "../helper/nodemailer.js";
@@ -10,6 +11,7 @@ import isOnline from "is-online";
 import { comparePass, encryptPass } from "../encrypt/bycrpt.js";
 import { createAccessJWT, createRefreshJWT } from "../JWT/jwtAction.js";
 import { auth, newAccessJWT } from "../authMiddleware/auth.js";
+import { deleteSession } from "../sessionDB/sessionJwtModel.js";
 const router = express.Router();
 
 router.post("/addUser", async (req, res, next) => {
@@ -123,5 +125,18 @@ router.get("/getUserInfo", auth, (req, res, next) => {
 });
 
 router.get("/getAccessJWT", newAccessJWT);
+
+router.post("/signout", async (req, res, next) => {
+  try {
+    const { _id, accessJWT, refreshJWT } = req.body;
+    if (_id && refreshJWT) await updateById(_id, { refreshJWT: "" });
+
+    if (result?._id) {
+      await deleteSession({ accessJWT });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default router;
