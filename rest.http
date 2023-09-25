@@ -3,8 +3,14 @@
 @categoryAPI={{rootAPI}}/store/api/v1/category
 
 @customerAPI={{rootAPI}}/store/api/v1/customer
+
+@orderAPI= {{rootAPI}}/store/api/v1/order/trending
 ###
 GET {{rootAPI}}
+
+###
+GET {{orderAPI}}
+
 
 ###
 GET {{categoryAPI}}

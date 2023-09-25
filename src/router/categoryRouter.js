@@ -3,6 +3,7 @@ import {
   getAllCategories,
   getCatItems,
   getOneCatItem,
+  returnAllProducts,
 } from "../categories/categoryModel.js";
 
 const router = express.Router();
@@ -41,6 +42,19 @@ router.get("/:slug/:_id", async (req, res, next) => {
         });
       }
     }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/getProduct", async (req, res, next) => {
+  try {
+    const products = await returnAllProducts();
+    products &&
+      res.json({
+        status: "success",
+        products,
+      });
   } catch (err) {
     next(err);
   }

@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 const categorySchema = mongoose.model("categories", {});
-const productSchema = mongoose.model("products", {});
+const productSchema = mongoose.model("products", {
+  qty: {
+    type: String,
+    required: true,
+  },
+});
 
 export const getAllCategories = () => {
   return categorySchema.find();
@@ -17,4 +22,14 @@ export const getOneCatItem = (id) => {
     }
     return data;
   });
+};
+export const returnAllProducts = () => {
+  return productSchema.find();
+};
+export const updateProductDataById = (id, data) => {
+  return productSchema.findByIdAndUpdate(id, data);
+};
+
+export const findProductById = (id) => {
+  return productSchema.findById(id);
 };
