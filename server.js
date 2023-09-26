@@ -22,7 +22,7 @@ app.use("/store/api/v1/order", order);
 
 app.use((error, req, res, next) => {
   const code = error.statusCode || 500;
-  res.status(code).json({
+  res.json({
     status: "error",
     message: error.message,
   });
