@@ -13,3 +13,7 @@ export const findAllOrderByFilter = (data) => {
 export const findOrderById = (id) => {
   return orderSchema.findById(id);
 };
+
+export const deleteOrderById = (id) => {
+  return orderSchema.findByIdAndDelete(id);
+};

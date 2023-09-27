@@ -2,6 +2,7 @@ import express from "express";
 import isOnline from "is-online";
 import {
   addOrder,
+  deleteOrderById,
   findAllOrder,
   findAllOrderByFilter,
 } from "../orderDB/orderModel.js";
@@ -22,6 +23,7 @@ router.post("/add", auth, async (req, res, next) => {
       if (result?._id) {
         result?.items.forEach(async (item) => {
           const findItem = await getOneCatItem(item?._id);
+          //this is for reducing the qty of product that sold
           findItem?._id &&
             (await updateProductDataById(findItem?._id, {
               qty: +findItem?.qty - +item.qty,
@@ -31,6 +33,7 @@ router.post("/add", auth, async (req, res, next) => {
         return res.json({
           status: "success",
           message: "Order has been placed",
+          item: result,
         });
       } else {
         return res.json({
@@ -79,4 +82,19 @@ router.get("/trending", async (req, res, next) => {
   }
 });
 
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    if (id) {
+      const result = await deleteOrderById(id);
+
+      result?._id &&
+        res.json({
+          status: "success",
+        });
+    }
+  } catch (error) {
+    next(err);
+  }
+});
 export default router;

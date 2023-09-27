@@ -23,9 +23,11 @@ export const auth = async (req, res, next) => {
   } catch (err) {
     if (err?.message?.includes("jwt expired")) {
       err.message = "jwt expired";
+      err.statusCode = 401;
     }
     if (err?.message?.includes("invalid signature")) {
       err.message = "invalid signature";
+      err.statusCode = 401;
     }
     return next(err);
   }

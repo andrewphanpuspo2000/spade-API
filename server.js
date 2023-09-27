@@ -22,7 +22,8 @@ app.use("/store/api/v1/order", order);
 
 app.use((error, req, res, next) => {
   const code = error.statusCode || 500;
-  res.json({
+  console.log("this is error from server next error:", error);
+  res.status(code).json({
     status: "error",
     message: error.message,
   });
