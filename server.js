@@ -1,9 +1,10 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import dotenv from "dotenv";
 import mongodb from "./src/config/mongoDb.js";
-dotenv.config();
+
 mongodb();
 const app = express();
 const PORT = 8001;
