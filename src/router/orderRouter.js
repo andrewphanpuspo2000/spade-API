@@ -13,6 +13,7 @@ import {
   returnAllProducts,
   updateProductDataById,
 } from "../categories/categoryModel.js";
+import mongoose from "mongoose";
 const router = express.Router();
 
 router.post("/add", auth, async (req, res, next) => {
@@ -65,12 +66,13 @@ router.get("/trending", async (req, res, next) => {
         });
         // console.log(filter);
         if (obj.count < filter.length) {
-          obj.id = item._id;
+          obj.id = parse._id;
           obj.count = filter.length;
         }
       });
 
       await Promise.all(filterPromises); // Wait for all promises to complete
+      console.log(obj);
       const trendingItem = await findProductById(obj.id);
       res.json({
         status: "success",

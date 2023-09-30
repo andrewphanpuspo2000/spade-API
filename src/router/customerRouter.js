@@ -5,7 +5,7 @@ import {
   updateByFilter,
   updateById,
 } from "../customerDb/customerModel.js";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 import { accountVerificationEmail } from "../helper/nodemailer.js";
 import isOnline from "is-online";
 import { comparePass, encryptPass } from "../encrypt/bycrpt.js";
@@ -19,7 +19,7 @@ router.post("/addUser", async (req, res, next) => {
     const { email, password } = req.body;
     const checkEmail = await findByFilter({ email });
     if (!checkEmail) {
-      const verifCode = uuidv4();
+      const verifCode = 123; //uuid
       req.body.password = encryptPass(password);
       req.body.verificationCode = verifCode;
       const online = await isOnline();
