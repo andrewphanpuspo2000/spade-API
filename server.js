@@ -4,7 +4,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import mongodb from "./src/config/mongoDb.js";
-
+import mongoose from "mongoose";
 mongodb();
 const app = express();
 const PORT = 8001;
@@ -29,6 +29,8 @@ app.use((error, req, res, next) => {
     message: error.message,
   });
 });
+
+await mongoose.connect(process.env.MONGO_URL);
 
 app.get("/", (req, res) => {
   res.json({
