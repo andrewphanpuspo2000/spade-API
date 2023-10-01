@@ -4,17 +4,12 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import mongodb from "./src/config/mongoDb.js";
-import mongoose from "mongoose";
+
 mongodb();
 const app = express();
 const PORT = process.env.PORT || 8001;
 app.use(express.json());
-app.use(
-  cors({
-    origin:
-      "http://my-e-commerce-spade.s3-website-ap-southeast-2.amazonaws.com",
-  })
-);
+app.use(cors());
 app.use(morgan());
 //import router end point
 import categoryRouter from "./src/router/categoryRouter.js";
