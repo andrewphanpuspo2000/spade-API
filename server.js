@@ -21,10 +21,6 @@ app.use("/store/api/v1/payments", methods);
 import order from "./src/router/orderRouter.js";
 app.use("/store/api/v1/order", order);
 
-await mongoose.connect(process.env.MONGO_URL).then(() => {
-  console.log("success");
-});
-
 app.get("/", (req, res) => {
   res.json({
     status: "success",
