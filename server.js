@@ -7,7 +7,7 @@ import mongodb from "./src/config/mongoDb.js";
 import mongoose from "mongoose";
 mongodb();
 const app = express();
-const PORT = 8001;
+const PORT = process.env.PORT || 8001;
 app.use(express.json());
 app.use(cors());
 app.use(morgan());
