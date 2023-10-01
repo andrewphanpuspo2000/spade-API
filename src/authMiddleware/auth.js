@@ -13,7 +13,7 @@ export const auth = async (req, res, next) => {
 
     if (verifyJWT?.email) {
       const user = await findByFilter({ email: verifyJWT.email });
-      if (user._id) {
+      if (user._id ) {
         user.password = undefined;
         user.refreshJWT = undefined;
         req.userInfo = user;
