@@ -21,21 +21,23 @@ app.use("/store/api/v1/payments", methods);
 import order from "./src/router/orderRouter.js";
 app.use("/store/api/v1/order", order);
 
+await mongoose.connect(process.env.MONGO_URL).then(() => {
+  console.log("success");
+});
+
+app.get("/", (req, res) => {
+  res.json({
+    status: "success",
+    message: "server is running",
+  });
+});
+
 app.use((error, req, res, next) => {
   const code = error.statusCode || 500;
   console.log("this is error from server next error:", error);
   res.status(code).json({
     status: "error",
     message: error.message,
-  });
-});
-
-await mongoose.connect(process.env.MONGO_URL);
-
-app.get("/", (req, res) => {
-  res.json({
-    status: "success",
-    message: "server is running",
   });
 });
 
