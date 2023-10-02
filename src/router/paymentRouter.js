@@ -23,8 +23,10 @@ router.post("/create-payment-intent", auth, async (req, res, next) => {
     console.log("this is env key:", process.env.STRIPE_S_K);
     const { amount, currency, paymentMethod } = req.body;
     const stripe = new Stripe(process.env.STRIPE_S_K);
+    console.log(amount, typeof amount);
+
     const { client_secret } = await stripe.paymentIntents.create({
-      amount: amount * 100,
+      amount: Math.ceil(amount) * 100,
       currency,
       payment_method_types: [paymentMethod],
     });
